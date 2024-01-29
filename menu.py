@@ -1,5 +1,6 @@
 from help_fun import *
 
+
 class Menu:
     def __init__(self, choice = ""):
         self.choice = ""

@@ -2,6 +2,7 @@ from player import Player
 from menu import Menu
 from help_fun import *
 
+
 class Game:
     def __init__(self,order = 0,slot = ""):
         self.players = [Player(), Player()]

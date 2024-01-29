@@ -1,5 +1,6 @@
 import os
 
+
 def check(name):
     """
     this function used to check if input have number or not
