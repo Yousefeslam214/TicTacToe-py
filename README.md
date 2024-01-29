@@ -95,7 +95,6 @@ This project is a command-line implementation of Tic-Tac-Toe in Python, employin
 - `player.py`: Contains the `Player` class for handling player details.
 - `menu.py`: Defines the `Menu` class for displaying menus.
 - `help_fun.py`: Includes helper functions (e.g., screen clearing).
-- ...
 
 ## Contributions
 
