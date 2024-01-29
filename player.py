@@ -10,6 +10,7 @@ class Player:
         if not check(self.name):
             print("Invalid input. Name must be a string. Please try again.")
             return self.choose_name()  # Recursive call
+        # return self.name
 
     def choose_symbol(self):
         """fun input symbol and check it"""

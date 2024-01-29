@@ -2,6 +2,9 @@ from player import Player
 from menu import Menu
 from help_fun import *
 
+# don't print symbol win i input my name in intro 
+# in end don't say "hey you win "and say name of winner
+
 import os
 
 def clear_screen():
@@ -26,27 +29,26 @@ class Game:
         self.order += 1
 
     def update_board(self):
-        self.Game.check_win()
-        # for i in self.arr:
-        #     if 
+        if self.check_win() or self.check_draw():
+            return  # Stop the recursion if the game is complete
         if self.order % 2 == 0:
             slot_symbol = "X"
-            print("X play")
+            print("X player ", end="")
+            print(f"{self.players[0].name}")
         else:
             slot_symbol = "O"
-            print("O play")
-        self.slot = input("which slot you chose : ")
-        if self.is_valid_input():
-            if self.is_valid_move():
-                self.arr[int(self.slot) - 1] = slot_symbol
-                self.display_board()
-                self.update_board()
-            else:
-                print("invvvaled------")
-                self.update_board()
-                
+            print("O player ", end="")
+            print(f"{self.players[1].name}")
+        if self.order == 0:
+            self.display_board()
+            self.order += 1
+        self.slot = input("choose a cell (1-9): ")
+        if self.is_valid_input() and self.is_valid_move():
+            self.arr[int(self.slot) - 1] = slot_symbol
+            self.display_board()
+            self.update_board()
         else:
-            print("invvvaled------")
+            print("Invalid input or move. Please try again.")
             self.update_board()
         self.order += 1
 
@@ -58,9 +60,6 @@ class Game:
 
     def reset_board(self):
         self.arr = [str(i) for i in range(1, 10)]
-
-
-
 
     def start_game(self):
         choice = self.menu.display_main_menu()
@@ -74,17 +73,31 @@ class Game:
         clear_screen()
         for idx, player in enumerate(self.players, start=1):
             print(f"Player {idx}, enter your details:")
+            if idx == 1:
+                print("player symbol is X")
+            else:
+                print("player symbol is O")
             player.choose_name()
-
             clear_screen()
 
     def quit_game(self):
         print("Thank you for playing!")
 
+    def check_winner(self):
+        if self.order % 2 == 0:
+            # slot_symbol = "X"
+            print("winner X player ", end="")
+            print(f"{self.players[0].name}")
+        else:
+            print("winner O player ", end="")
+            print(f"{self.players[1].name}")
+
     def play_game(self):
         while True:
             self.update_board()
             if self.check_win() or self.check_draw():
+                clear_screen()
+                self.check_winner()
                 choice = self.menu.display_endgame_menu()
                 if choice == "1":
                     self.restart_game()
@@ -99,10 +112,7 @@ class Game:
     #     while True:
     #         try:
     #             cell_choisce = int(input("choose a cell (1-9): "))
-    #             print(type(cell_choisce))
-    #             print(self.board.update_board() == True)
     #             if 1 <= cell_choisce <=9 and self.board.update_board():
-    #                 print("yousef")
     #                 break
     #             else:
     #                 print("Invalid move, try again. ")
@@ -112,21 +122,20 @@ class Game:
 
     def check_win(self):
         win_combinations = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], # rows
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], # colums
-            [0, 4, 8], [2, 4, 6]             # diagonals
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],  # rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],  # columns
+            [0, 4, 8], [2, 4, 6]              # diagonals
         ]
-    
         for combo in win_combinations:
-            if(self.board.arr[combo[0]] == self.board.arr[1] == self.board.arr[combo[2]]):
+            if self.arr[combo[0]] == self.arr[combo[1]] == self.arr[combo[2]]:
                 return True
-            return False
+        return False
 
     def check_draw(self):
-        return all(not cell.isdigit() for cell in self.board.arr)
+        return all(not cell.isdigit() for cell in self.arr)
 
     def restart_game(self):
-        self.board.reset_board()
+        self.reset_board()
         self.current_player_idx = 0
         self.play_game()
 
