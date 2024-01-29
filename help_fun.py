@@ -13,7 +13,5 @@ def check_two_symbols(name, x, y):
     """this fun input symbol and check if symbol true of not"""
     return (name != "") and (name == x or name == y)
 
-
-
 def clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
