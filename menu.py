@@ -13,6 +13,8 @@ class Menu:
             print("Invalid input. symbol must be a (1 or 2). Please try again.")
             print()
             return self.display_main_menu() # Recursive call
+        else:
+            return (self.choice)
 
     def display_endgame_menu(self):
         print("Game Over!")
@@ -23,4 +25,5 @@ class Menu:
             print("Invalid input. symbol must be a (1 or 2). Please try again.")
             print()
             return self.display_main_menu() # Recursive call
-        
+        else:
+            return (self.choice)
